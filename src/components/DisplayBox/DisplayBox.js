@@ -6,8 +6,8 @@ export default props => {
   return (
     <DisplayBox
       contenteditable="true"
-      onClick={onclick}
-      onBlur={onblur}
+      onClick={id => props.onclick(props.id)}
+      onBlur={() => props.onBlur()}
       style={{ width, marginLeft }}
     >
       {props.children}

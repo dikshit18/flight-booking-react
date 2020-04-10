@@ -1,44 +1,63 @@
 import React from "react";
-import { Select } from "antd";
+import { Menu, Dropdown } from "antd";
 
-const { Option } = Select;
-const onChange = value => {
-  console.log(`selected ${value}`);
-};
+const popularAirports = [
+  {
+    iata: "DEL",
+    lon: "77.10079",
+    iso: "IN",
+    status: 1,
+    name: "Indira Gandhi International Airport",
+    continent: "AS",
+    type: "airport",
+    lat: "28.556555",
+    size: "large"
+  },
+  {
+    iata: "PNQ",
+    lon: "73.920555",
+    iso: "IN",
+    status: 1,
+    name: "Pune Airport",
+    continent: "AS",
+    type: "airport",
+    lat: "18.581388",
+    size: "medium"
+  },
+  {
+    iata: "BKK",
+    lon: "100.752045",
+    iso: "TH",
+    status: 1,
+    name: "Suvarnabhumi Airport",
+    continent: "AS",
+    type: "airport",
+    lat: "13.693062",
+    size: "large"
+  }
+];
 
-const onBlur = () => {
-  console.log("blur");
-};
-
-const onSearch = val => {
-  console.log("search:", val);
-};
-const onFocus = () => {
-  console.log("focus");
-};
 const cityModal = props => {
-  console.log("props", props);
-
+  const menu = (
+    <Menu>
+      {popularAirports.map((ap, key) => {
+        return (
+          <Menu.Item style={{ width: "280px" }} key={key}>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+              <p>{ap.iata}</p>
+            </div>
+            <p style={{ textAlign: "right" }}>{ap.name}</p>
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  );
   return (
-    <Select
-      showSearch
-      size={"large"}
-      style={{ width: "100%" }}
-      placeholder="Select a person"
-      optionFilterProp="children"
-      onChange={onChange}
-      open={props.open}
-      onFocus={onfocus}
-      onBlur={props.close}
-      onSearch={onSearch}
-      filterOption={(input, option) =>
-        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      }
-    >
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="tom">Tom</Option>
-    </Select>
+    <Dropdown overlay={menu}>
+      <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+        Hover me
+      </a>
+    </Dropdown>
   );
 };
 

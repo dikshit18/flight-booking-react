@@ -6,29 +6,14 @@ import DisplayBox from "../components/DisplayBox/DisplayBox";
 import CityModal from "../components/CityModal/CityModal";
 const h1 = "<p>Hlo</p>";
 const BookingPage = props => {
-  const [openFromCity, closeFromCity] = useState(false);
-
-  const openFromCityDrawer = () => {
-    console.log("Hsbfkjs");
-    closeFromCity(true);
-  };
-  const closeFromCityDrawer = () => {
-    console.log("Hi111121");
-
-    closeFromCity(false);
-  };
   return (
     <Fragment>
       <BookingBackgroundContainer>
         <BookingCard>
           <Row justify="center">
             <Col span={4}>
-              <DisplayBox
-                width="250px"
-                onclick={openFromCityDrawer}
-                onblur={closeFromCityDrawer}
-              >
-                <CityModal open={openFromCity} close={closeFromCityDrawer} />
+              <DisplayBox width="250px">
+                <CityModal />
               </DisplayBox>
             </Col>
             <Col span={4} push={1}>
