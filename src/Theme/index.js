@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Card, Layout } from "antd";
+import { Card, Layout, Select } from "antd";
 
 export const BookingBackgroundContainer = styled.div`
   background: #2c3e50; /* fallback for old browsers */
@@ -30,4 +30,10 @@ export const DisplayBox = styled.div`
   height: 110px;
   border-radius: 5px;
   border: 0.5px solid;
+`;
+
+export const CityModal = styled(Select)`
+  width: 100%;
+  height: 100%;
+  position: relative;
 `;
