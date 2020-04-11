@@ -14,7 +14,7 @@ export const BookingBackgroundContainer = styled.div`
     #2c3e50
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   overflow: hidden;
-  height: 500px;
+  height: 1200px;
 `;
 
 export const BookingContainer = styled(Card)`
@@ -22,7 +22,7 @@ export const BookingContainer = styled(Card)`
   margin-left: 80px;
   margin-right: 80px;
   margin-top: 70px;
-  height: 300px;
+  height: 600px;
   border-radius: 10px;
 `;
 

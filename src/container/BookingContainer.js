@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
-import * as ENDPOINTS from "../constants/endpoints";
-import axios from "../constants/axios";
-import BookingCard from "../components/BookingCard/BookingCard";
+import * as ENDPOINTS from "../config/endpoints";
+import axios from "../config/axios";
+import BookingCard from "../components/BookingCard";
 import { BookingBackgroundContainer } from "../Theme";
-import { Row, Col, Input } from "antd";
-import DisplayBox from "../components/DisplayBox/DisplayBox";
-import CityModal from "../components/CityModal/CityModal";
-import cityModal from "../components/CityModal/CityModal";
+import BookingForm from "../components/Form";
+import { getAccessToken, getFlights } from "../config/flightsApi";
+import * as LOCALSTORAGE from "../config/localStorage";
+import moment from "moment";
 
 class Container extends Component {
   constructor(props) {
@@ -20,88 +20,46 @@ class Container extends Component {
 
   async componentDidMount() {
     const airports = await axios.get(ENDPOINTS.airports);
-    console.log("Got the Airport Data...", airports);
     if (airports.data.length) {
       this.setState({
         airports: [].concat(...airports.data)
       });
     }
-    console.log(this.state.airports);
+    const accessToken = await getAccessToken();
+    if (accessToken.data) {
+      LOCALSTORAGE.setToLocalStorage(
+        "accessToken",
+        accessToken.data.access_token
+      );
+    }
   }
 
-  onclick = divId => {
-    let clickedComponent;
-    switch (divId) {
-      case "#div1":
-        clickedComponent = <CityModal airports={this.state.airports} />;
-        this.setState({
-          clickedComponent
-        });
-        break;
-      case "#div2":
-        clickedComponent = <CityModal flights={this.state.airports} />;
-        break;
-    }
-    console.log(this.state.clickedComponent);
-  };
-  onblur = divId => {};
+  async formSubmission(values) {
+    console.log(values);
+    const { from, to, passengers, datePicker } = values;
+    const fromDate = moment(new Date(datePicker[0])).format("YYYY-MM-DD");
+    const toDate = moment(new Date(datePicker[1])).format("YYYY-MM-DD");
+    const flightDetails = await getFlights(
+      from,
+      to,
+      fromDate,
+      toDate,
+      passengers
+    );
+    // if (flightDetails.data) {
+    //   this.state;
+    // }
+  }
 
   render() {
     return (
       <Fragment>
         <BookingBackgroundContainer>
           <BookingCard>
-            <Row justify="center">
-              <Col span={4}>
-                <DisplayBox width="250px" onclick={this.onclick} id="#div1">
-                  {this.state.clickedComponent}
-                </DisplayBox>
-              </Col>
-              <Col span={4} push={1}>
-                <DisplayBox
-                  width="250px"
-                  marginLeft="8px"
-                  onclick={this.onclick}
-                  onblur={this.onblur}
-                  id="#div2"
-                >
-                  Hi
-                </DisplayBox>
-              </Col>
-              <Col span={4} push={2}>
-                <DisplayBox
-                  width="150px"
-                  marginLeft="16px"
-                  onclick={this.onclick}
-                  onblur={this.onblur}
-                  id="#div3"
-                >
-                  Hi
-                </DisplayBox>
-              </Col>
-              <Col span={4} push={1}>
-                <DisplayBox
-                  width="150px"
-                  marginLeft="21px"
-                  onclick={this.onclick}
-                  onblur={this.onblur}
-                  id="#div4"
-                >
-                  Hi
-                </DisplayBox>
-              </Col>
-              <Col span={4}>
-                <DisplayBox
-                  width="220px"
-                  marginLeft="25px"
-                  onclick={this.onclick}
-                  onblur={this.onblur}
-                  id="#div5"
-                >
-                  Hi
-                </DisplayBox>
-              </Col>
-            </Row>
+            <BookingForm
+              airports={this.state.airports}
+              formSubmission={this.formSubmission}
+            />
           </BookingCard>
         </BookingBackgroundContainer>
       </Fragment>

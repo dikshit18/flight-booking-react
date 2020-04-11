@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import BookingContainer from "./container/BookingContainer";
 import FlightsContainer from "./container/FlightsContainer";
 
-import * as ROUTES from "./constants/routeName";
+import * as ROUTES from "./config/routeName";
 
 const routes = () => {
   return (
