@@ -139,8 +139,8 @@ const BookingForm = props => {
           <RangePicker disabledDate={disabledDate} />
         </Form.Item>
         <Form.Item
-          label="Passengers"
-          name="passengers"
+          label="Adults"
+          name="adults"
           rules={[
             { required: true, message: "Select  the number of passengers" }
           ]}

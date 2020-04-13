@@ -37,3 +37,12 @@ export const CityModal = styled(Select)`
   height: 100%;
   position: relative;
 `;
+
+export const FlightsContainer = styled(Card)`
+  background-color: #e0e0e0;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 70px;
+  height: 600px;
+  border-radius: 10px;
+`;

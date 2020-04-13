@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import * as ENDPOINTS from "../config/endpoints";
 import axios from "../config/axios";
 import BookingCard from "../components/BookingCard";
@@ -9,12 +9,13 @@ import { getAccessToken, getFlights } from "../config/flightsApi";
 import * as LOCALSTORAGE from "../config/localStorage";
 import moment from "moment";
 
-class Container extends Component {
+class BookingContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       airports: [],
-      clickedComponent: ""
+      clickedComponent: "",
+      flightDetails: null
     };
   }
 
@@ -34,28 +35,25 @@ class Container extends Component {
     }
   }
 
-  async formSubmission(values) {
+  formSubmission = async values => {
     console.log(values);
-    const { from, to, passengers, datePicker } = values;
+    const { from, to, adults, datePicker } = values;
     const fromDate = moment(new Date(datePicker[0])).format("YYYY-MM-DD");
     const toDate = moment(new Date(datePicker[1])).format("YYYY-MM-DD");
-    const flightDetails = await getFlights(
-      from,
-      to,
-      fromDate,
-      toDate,
-      passengers
-    );
-    // if (flightDetails.data) {
-    //   this.state;
-    // }
-  }
+    const flightDetails = await getFlights(from, to, fromDate, toDate, adults);
+    console.log(flightDetails);
+
+    this.props.history.push({
+      pathname: "/flights",
+      flightDetails
+    });
+  };
 
   render() {
     return (
       <Fragment>
         <BookingBackgroundContainer>
-          <BookingCard>
+          <BookingCard title="Search flight">
             <BookingForm
               airports={this.state.airports}
               formSubmission={this.formSubmission}
@@ -67,4 +65,4 @@ class Container extends Component {
   }
 }
 
-export default withRouter(Container);
+export default withRouter(BookingContainer);

@@ -16,7 +16,7 @@ const routes = () => {
       <Route
         exact
         path={ROUTES.FLIGHTS_LIST}
-        render={() => <FlightsContainer />}
+        render={props => <FlightsContainer {...props} />}
       />
       <Route path="*" render={props => <Redirect to={ROUTES.FLIGHTS_LIST} />} />
     </Switch>

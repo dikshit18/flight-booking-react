@@ -43,8 +43,12 @@ export const getFlights = async (from, to, departDate, returnDate, adults) => {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
     });
+    console.log(response);
+
     return response;
   } catch (e) {
+    console.log(e);
+
     return {};
   }
 };
