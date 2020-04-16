@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Select, DatePicker, InputNumber, Switch } from "antd";
 import moment from "moment";
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const BookingForm = props => {
   const { airports } = props;
@@ -15,9 +14,6 @@ const BookingForm = props => {
   function onChange(value) {
     updateFrom(value);
   }
-  const onFinish = values => {
-    console.log("Success:", values);
-  };
 
   const disabledDate = current => {
     // Can not select days before today and today
@@ -136,7 +132,7 @@ const BookingForm = props => {
           name="datePicker"
           rules={[{ required: true, message: "Select your journey dates" }]}
         >
-          <RangePicker disabledDate={disabledDate} />
+          <DatePicker disabledDate={disabledDate} />
         </Form.Item>
         <Form.Item
           label="Adults"

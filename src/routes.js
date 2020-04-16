@@ -14,7 +14,6 @@ const routes = () => {
         render={() => <BookingContainer />}
       />
       <Route
-        exact
         path={ROUTES.FLIGHTS_LIST}
         render={props => <FlightsContainer {...props} />}
       />

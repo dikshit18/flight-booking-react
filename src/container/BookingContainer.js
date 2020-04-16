@@ -8,6 +8,7 @@ import BookingForm from "../components/Form";
 import { getAccessToken, getFlights } from "../config/flightsApi";
 import * as LOCALSTORAGE from "../config/localStorage";
 import moment from "moment";
+import "../Theme/loader.css";
 
 class BookingContainer extends Component {
   constructor(props) {
@@ -15,11 +16,17 @@ class BookingContainer extends Component {
     this.state = {
       airports: [],
       clickedComponent: "",
-      flightDetails: null
+      flightDetails: null,
+      isLoading: false
     };
   }
 
   async componentDidMount() {
+    console.log("==>", this.state.isLoading);
+
+    await this.setState({ isLoading: true });
+    console.log("==>", this.state.isLoading);
+
     const airports = await axios.get(ENDPOINTS.airports);
     if (airports.data.length) {
       this.setState({
@@ -33,16 +40,17 @@ class BookingContainer extends Component {
         accessToken.data.access_token
       );
     }
+    await this.setState({ isLoading: false });
   }
 
   formSubmission = async values => {
-    console.log(values);
-    const { from, to, adults, datePicker } = values;
-    const fromDate = moment(new Date(datePicker[0])).format("YYYY-MM-DD");
-    const toDate = moment(new Date(datePicker[1])).format("YYYY-MM-DD");
-    const flightDetails = await getFlights(from, to, fromDate, toDate, adults);
-    console.log(flightDetails);
+    console.log("=>", this.state.isLoading);
+    await this.setState({ isLoading: true });
+    console.log("=>", this.state.isLoading);
 
+    const { from, to, adults, datePicker } = values;
+    const fromDate = moment(new Date(datePicker)).format("YYYY-MM-DD");
+    const flightDetails = await getFlights(from, to, fromDate, adults);
     this.props.history.push({
       pathname: "/flights",
       flightDetails
@@ -54,10 +62,12 @@ class BookingContainer extends Component {
       <Fragment>
         <BookingBackgroundContainer>
           <BookingCard title="Search flight">
-            <BookingForm
-              airports={this.state.airports}
-              formSubmission={this.formSubmission}
-            />
+            <div className={this.state.isLoading ? "loader" : ""}>
+              <BookingForm
+                airports={this.state.airports}
+                formSubmission={this.formSubmission}
+              />
+            </div>
           </BookingCard>
         </BookingBackgroundContainer>
       </Fragment>

@@ -9,6 +9,11 @@ class FlightsContainer extends Component {
   constructor(props) {
     super(props);
     this.flightDetails = this.props.location.flightDetails;
+    if (!this.flightDetails) {
+      return this.props.history.push({
+        pathname: "/booking"
+      });
+    }
   }
 
   render() {

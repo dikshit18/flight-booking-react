@@ -2,16 +2,16 @@ import styled, { css } from "styled-components";
 import { Card, Layout, Select } from "antd";
 
 export const BookingBackgroundContainer = styled.div`
-  background: #2c3e50; /* fallback for old browsers */
+  background: #6441a5; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #4ca1af,
-    #2c3e50
+    #2a0845,
+    #6441a5
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #4ca1af,
-    #2c3e50
+    #2a0845,
+    #6441a5
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   overflow: hidden;
   height: 1200px;
@@ -43,6 +43,6 @@ export const FlightsContainer = styled(Card)`
   margin-left: 80px;
   margin-right: 80px;
   margin-top: 70px;
-  height: 600px;
   border-radius: 10px;
+  overflow: auto;
 `;

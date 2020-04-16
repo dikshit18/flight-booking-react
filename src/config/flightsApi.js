@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 import axios from "../config/axios";
 const qs = require("querystring");
 import * as ENDPOINTS from "../config/endpoints";
+
 export const getAccessToken = async () => {
   try {
     const config = {
@@ -25,17 +26,16 @@ export const getAccessToken = async () => {
   }
 };
 
-export const getFlights = async (from, to, departDate, returnDate, adults) => {
-  const max = 50;
+export const getFlights = async (from, to, departDate, adults) => {
+  const max = 250;
   const url =
     ENDPOINTS.flightDetails +
-    `?originLocationCode=${from}&destinationLocationCode=${to}&departureDate=${departDate}&returnDate=${returnDate}&adults=${adults}&max=${max}`;
+    `?originLocationCode=${from}&destinationLocationCode=${to}&departureDate=${departDate}&adults=${adults}&max=${max}&&currencyCode=INR&nonStop=true`;
   const config = {
     Headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`
     }
   };
-  console.log("Config", config);
   try {
     const response = await axios.get(url, {
       params: {},
@@ -47,8 +47,6 @@ export const getFlights = async (from, to, departDate, returnDate, adults) => {
 
     return response;
   } catch (e) {
-    console.log(e);
-
     return {};
   }
 };
